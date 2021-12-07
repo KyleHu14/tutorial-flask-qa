@@ -7,11 +7,21 @@ class User(db.Model):
     expert = db.Column(db.Boolean)
     admin = db.Column(db.Boolean)
 
+    # backref :
+    #  Declares a property on the question called asker 
+    #  Question.asker points to the User who asked the question
     questions_asked = db.relationship(
         'Question', 
         foreign_keys = 'Question.asker_id', 
         backref = 'asker', 
         lazy = True
+    )
+
+    answers_requested = db.relationship(
+        'Question',
+        foreign_keys = 'Question.expert_id',
+        backref = 'expert',
+        lazy=True
     )
 
 class Question(db.Model):
